@@ -307,7 +307,8 @@ func (p *Proxy) Fetch() {
 				fwdr, err := ForwarderFromURL(line, "",
 					time.Duration(3)*time.Second, time.Duration(0)*time.Second)
 				if err != nil {
-					log.Fatal(err)
+					log.F("[provider] skip error : %s", err)
+					continue
 				}
 				fwdr.SetMaxFailures(uint32(3))
 				p.main.fwdrs = append(p.main.fwdrs, fwdr)

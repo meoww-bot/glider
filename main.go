@@ -74,7 +74,8 @@ func main() {
 	for _, listen := range config.Listens {
 		local, err := proxy.ServerFromURL(listen, pxy)
 		if err != nil {
-			log.Fatal(err)
+			log.F("listens error skip : %s", err)
+			continue
 		}
 		go local.ListenAndServe()
 	}
@@ -83,7 +84,8 @@ func main() {
 	for _, s := range config.Services {
 		service, err := service.New(s)
 		if err != nil {
-			log.Fatal(err)
+			log.F("services error skip : %s", err)
+			continue
 		}
 		go service.Run()
 	}
